@@ -110,7 +110,7 @@ class Game {
 
         // initialise the ball with a random angle
         this.ball = new Ball(
-            new Vec(450, 350),
+            new Vec(450, 300),
             Math.random() * Math.PI / 2 + Math.PI / 4,
             config.ballRadius,
             config.ballSpeed,
@@ -133,7 +133,7 @@ class Game {
         });
 
         // re-render the game every frame
-        this.gameLoop = setInterval(() => this.render(this.ctx), 1000 / config.frameRate);
+        this.gameLoop = setInterval(() => this.render(this.ctx), 1000 / config.frameRate)
     }
 
     gameOver(message: string) {
@@ -148,7 +148,7 @@ class Game {
             this.ctx.fillText("Click to play again", config.gameWidth / 2, config.gameHeight / 2 + 40);
 
             clearInterval(this.gameLoop); // exit the game loop
-            this.canvas.onclick = () => location.reload(); // reload the page on click
+            this.canvas.onclick = () => game = new Game(); // restart the game on click
         }, 1000);
     }
 
@@ -198,4 +198,4 @@ class Game {
     }
 }
 
-const game = new Game();
+let game = new Game();

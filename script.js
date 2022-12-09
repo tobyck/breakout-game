@@ -89,7 +89,7 @@ class Game {
             }
         }
         // initialise the ball with a random angle
-        this.ball = new Ball(new Vec(450, 350), Math.random() * Math.PI / 2 + Math.PI / 4, config.ballRadius, config.ballSpeed, "#fff");
+        this.ball = new Ball(new Vec(450, 300), Math.random() * Math.PI / 2 + Math.PI / 4, config.ballRadius, config.ballSpeed, "#fff");
         // initialise the bat in the middle of the bottom of the screen
         this.bat = new Block(new Vec(config.gameWidth / 2 - config.batWidth / 2, this.canvas.height - config.batHeight - config.blockGap), new Vec(config.batWidth, config.batHeight), "#4ec2f0");
         // move the bat with the mouse
@@ -109,7 +109,7 @@ class Game {
             this.ctx.font = "20px system-ui";
             this.ctx.fillText("Click to play again", config.gameWidth / 2, config.gameHeight / 2 + 40);
             clearInterval(this.gameLoop); // exit the game loop
-            this.canvas.onclick = () => location.reload(); // reload the page on click
+            this.canvas.onclick = () => game = new Game(); // restart the game on click
         }, 1000);
     }
     render(ctx) {
@@ -154,4 +154,4 @@ class Game {
             : this.ball.angle;
     }
 }
-const game = new Game();
+let game = new Game();
