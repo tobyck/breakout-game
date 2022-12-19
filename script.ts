@@ -1,3 +1,4 @@
+// config object for adjusting the game's properties
 const config: { [key: string]: number } = {
     gameHeight: 600,
     gameWidth: 900,
@@ -136,11 +137,12 @@ class Game {
         this.gameLoop = setInterval(() => this.render(this.ctx), 1000 / config.frameRate)
     }
 
-    gameOver(message: string) {
-        setTimeout(() => {
-            clearInterval(this.gameLoop);
+    gameOver(message: string) { // when the game ends
+        setTimeout(() => { // after 1000ms
+            clearInterval(this.gameLoop); // stop the game loop
             this.ctx.clearRect(0, 0, config.gameWidth, config.gameHeight); // clear the whole canvas
 
+            // display the game over message
             this.ctx.font = "60px system-ui";
             this.ctx.fillStyle = "#fff";
             this.ctx.textAlign = "center";
@@ -148,7 +150,8 @@ class Game {
             this.ctx.font = "20px system-ui";
             this.ctx.fillText("Click to play again", config.gameWidth / 2, config.gameHeight / 2 + 40);
 
-            this.canvas.onclick = () => location.reload();
+            // make the page reload when the canvas is clicked
+            this.canvas.onclick = location.reload;
         }, 1000);
     }
 
@@ -156,6 +159,7 @@ class Game {
         // start on a blank canvas
         ctx.clearRect(0, 0, config.gameWidth, config.gameHeight);
 
+        // render the pink bricks at the top
         for (const row of this.blocks) {
             for (const block of row) {
                 block.render(ctx);
@@ -185,8 +189,11 @@ class Game {
         this.blocks.forEach((row, i) => {
             row.forEach((block, j) => {
                 if (block.touching(this.ball)) {
+                    // bounce the ball off the block (see the bounceAngle method in the Block class)
                     this.ball.angle = block.bounceAngle(this.ball);
-                    this.blocks[i].splice(j, 1); // remove the block if it's hit
+
+                    // at index j, remove 1 block
+                    this.blocks[i].splice(j, 1);
                 }
             });
         });
@@ -198,4 +205,5 @@ class Game {
     }
 }
 
-let game = new Game();
+// initialise a new game when the page loads
+const game = new Game();
