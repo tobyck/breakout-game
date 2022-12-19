@@ -4,15 +4,15 @@ const config = {
     get blockWidth() {
         return (this.gameWidth - this.margin * 2 - this.blockGap) / this.blocksX;
     },
-    blockHeight: 25,
+    blockHeight: 28,
     margin: 100,
     blockGap: 2,
-    blocksX: 10,
-    blocksY: 4,
+    blocksX: 0,
+    blocksY: 0,
     ballSpeed: 6,
     ballRadius: 6,
     batHeight: 13,
-    batWidth: 80,
+    batWidth: 100,
     frameRate: 60,
 };
 class Vec {
@@ -101,6 +101,7 @@ class Game {
     }
     gameOver(message) {
         setTimeout(() => {
+            clearInterval(this.gameLoop);
             this.ctx.clearRect(0, 0, config.gameWidth, config.gameHeight); // clear the whole canvas
             this.ctx.font = "60px system-ui";
             this.ctx.fillStyle = "#fff";
@@ -108,8 +109,7 @@ class Game {
             this.ctx.fillText(message, config.gameWidth / 2, config.gameHeight / 2);
             this.ctx.font = "20px system-ui";
             this.ctx.fillText("Click to play again", config.gameWidth / 2, config.gameHeight / 2 + 40);
-            clearInterval(this.gameLoop); // exit the game loop
-            this.canvas.onclick = () => game = new Game(); // restart the game on click
+            this.canvas.onclick = () => location.reload();
         }, 1000);
     }
     render(ctx) {

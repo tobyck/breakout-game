@@ -4,15 +4,15 @@ const config: { [key: string]: number } = {
     get blockWidth() {
         return (this.gameWidth - this.margin * 2 - this.blockGap) / this.blocksX;
     },
-    blockHeight: 25,
+    blockHeight: 28,
     margin: 100,
     blockGap: 2,
-    blocksX: 10,
-    blocksY: 4,
+    blocksX: 0,
+    blocksY: 0,
     ballSpeed: 6,
     ballRadius: 6,
     batHeight: 13,
-    batWidth: 80,
+    batWidth: 100,
     frameRate: 60,
 }
 
@@ -87,7 +87,7 @@ class Game {
 
     constructor() {
         // initialise the canvas with the game dimensions
-        this.canvas = document.querySelector("canvas")
+        this.canvas = document.querySelector("canvas");
         this.canvas.width = config.gameWidth;
         this.canvas.height = config.gameHeight;
         this.ctx = this.canvas.getContext("2d");
@@ -138,6 +138,7 @@ class Game {
 
     gameOver(message: string) {
         setTimeout(() => {
+            clearInterval(this.gameLoop);
             this.ctx.clearRect(0, 0, config.gameWidth, config.gameHeight); // clear the whole canvas
 
             this.ctx.font = "60px system-ui";
@@ -147,8 +148,7 @@ class Game {
             this.ctx.font = "20px system-ui";
             this.ctx.fillText("Click to play again", config.gameWidth / 2, config.gameHeight / 2 + 40);
 
-            clearInterval(this.gameLoop); // exit the game loop
-            this.canvas.onclick = () => game = new Game(); // restart the game on click
+            this.canvas.onclick = () => location.reload();
         }, 1000);
     }
 
